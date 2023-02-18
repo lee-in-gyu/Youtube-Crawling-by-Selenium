@@ -45,7 +45,7 @@ def scroll():
 driver = webdriver.Chrome(service=service)
 
 # 스크래핑 할 URL 세팅
-URL = "https://www.youtube.com/playlist?list=PLCS0nOWWS-PmFCOuQV05Vv-hLxlpyfFWy"
+URL = "https://www.youtube.com/playlist?list=PLCS0nOWWS-PmeSrE_HLukIHLcqJ3trTxl"
 # 크롬 드라이버를 통해 지정한 URL의 웹 페이지 오픈
 driver.get(URL)
 # 웹 페이지 로딩 대기
@@ -63,7 +63,7 @@ content_total = soup_source.find_all('a','yt-simple-endpoint style-scope ytd-pla
 # content_thum = soup_source.find_all('img','yt-core-image--fill-parent-height yt-core-image--fill-parent-width yt-core-image yt-core-image--content-mode-scale-aspect-fill yt-core-image--loaded')
 
 # 콘텐츠 제목만 추출
-content_title = list(map(lambda data: data.get_text().replace("\n", "").replace("[PUMP IT UP XX]", "").replace("[펌프잇업 20주년]", ""), content_total))
+content_title = list(map(lambda data: data.get_text().replace("\n", "").strip().replace("[PUMP IT UP XX]", "").strip().replace("[펌프잇업 20주년]", "").strip(), content_total))
 # 콘텐츠 링크만 추출
 content_link = list(map(lambda data: "https://youtube.com" + data["href"], content_total))
 
@@ -71,11 +71,11 @@ content_link = list(map(lambda data: "https://youtube.com" + data["href"], conte
 # content_img = list(map(lambda data: data["src"], content_thum))
 
 # 딕셔너리 포맷팅
-content_total_dict = {'title': content_title, 
-                      'url' : content_link,
-                      'level':'10 under',
+content_total_dict = {'title':content_title, 
+                      'url':content_link,
+                      'level':'24',
                      }
 
 data_save = pd.DataFrame(content_total_dict)
 #데이터를 저장 
-data_save.to_csv("6~9.csv", encoding='utf-8-sig')
+data_save.to_csv("24.csv", encoding='utf-8-sig')
